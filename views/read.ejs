@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Secret</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            text-align: center;
+            width: 50vw;
+            max-width: 500px;
+            margin-bottom: 30px;
+            margin-top: 0;
+            min-height: 20em;
+            border:black;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .card-text {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .btn-primary {
+            font-size: 16px;
+            padding: 8px 20px;
+        }
+        .reaction {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .like-section {
+            display: flex;
+            align-items: center;
+            margin-top:5em;
+            position:sticky;
+            margin-bottom: 0;
+        }
+        .like-count {
+            margin-bottom: 0;
+            margin-left: 10px;
+        }
+        .like-post {
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            height: 3em;
+            width:5em;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+        }
+        .like-post.liked {
+            background-color: rgb(255, 0, 166);
+            border-color: rgb(255, 0, 166);
+            color: white;
+        }
+        .go-back-btn {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <%- include('header.ejs') %>
+
+    <div class="container">
+        <h1 class="text-center mt-5 mb-4">Secret</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <% if (post.title) { %>
+                        <%= post.title.charAt(0).toUpperCase() + post.title.slice(1) %>
+                    <% } %>
+                </h5>
+                <p><%= post.content %></p>
+                <div class="reaction d-flex justify-content-between align-items-center">
+                    <div class="like-section d-flex align-items-center">
+                        <form action="/like/<%= post.userId %>/<%= post.secretId %>" method="POST" class="like-form" style="display: inline;">
+                            <button type="submit" class="like-post <% if (post.likedBy?.includes(currentUser?._id)) { %>liked<% } %>">
+                                <% if (post.likedBy?.includes(currentUser?._id)) { %> 👍Liked  <% } else { %>  👍Like  <% } %>
+                            </button>
+                        </form>
+                        <p class="like-count mb-0 ml-2"><%= post.likeCount %> Like</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
